@@ -1,0 +1,91 @@
+*Arch Linux installation - legacy mode*
+used https://averagelinuxuser.com/a-step-by-step-arch-linux-installation-guide/
+
+*Setup wifi*
+
+use iwd to access to wifi with WEP2 encription
+https://wiki.archlinux.org/index.php/Iwd
+
+$ iwctl
+$ [iwd]# station device connect SSID
+
+*Partition*
+
+$ fdisk -l #see all partition, then
+$ fdisk /dev/sda #create a dos partition table and write it
+
+$ cfdisk /dev/sda
+
+make one partition for the system, make it bootable and then RAMx2 for swap
+
+then format them
+
+$ mkfs.ext4 /dev/sda1
+$ mkswap /dev/sda2
+
+$mount /dev/sda1 /mnt
+
+*Install the system*
+
+$ pacstrap -i /mnt base linux linux-firmware sudo vim mc w3m byobu netctl git python3 powertop zsh
+
+*Generate fstab file*
+
+$ genfstab -U -p /mnt >> /mnt/etc/fstab
+
+*Chroot to the installed system*
+
+$ arch-chroot /mnt /bin/bash
+
+*Set locale*
+
+$ vim /etc/locale.gen #You should jump to the line #en_US.UTF-8 UTF-8. Uncomment it by removing the # sign and save
+$ locale-gen
+
+*Set the time zone*
+
+$ ln -sf /usr/share/zoneinfo/Europe/Minsk /etc/localtime
+
+*Set local time*
+
+$ hwclock --systohc --utc
+$ date
+
+*Set hostname*
+
+$ echo x61s > /etc/hostname
+
+$ vim /etc/hosts
+then add
+127.0.1.1 localhost.localdomain x61s
+
+*Enable network*
+
+$ pacman -S networkmanager
+$ systemctl enable NetworkManager
+
+*Set root password*
+
+$ passwd
+
+*Set SWAP*
+
+$ swapon /dev/sda2
+
+To enable this swap partition on boot, add an entry to /etc/fstab:
+UUID=device_UUID none swap defaults 0 0
+
+to find UUID run
+$ blkid | grep UUID=
+
+*Install GRUB*
+
+$ pacman -S grub
+$ grub-install /dev/sda
+$ grub-mkconfig -o /boot/grub/grub.cfg
+
+*Reboot*
+
+$ exit
+$ umount -R /mnt
+$ reboot
