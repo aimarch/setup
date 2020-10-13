@@ -1,5 +1,8 @@
 ## *Arch Linux installation - legacy mode*
-used https://averagelinuxuser.com/a-step-by-step-arch-linux-installation-guide/
+
+used
+https://wiki.archlinux.org/index.php/Installation_guide
+https://averagelinuxuser.com/a-step-by-step-arch-linux-installation-guide/
 
 ### *Setup wifi*
 
@@ -29,6 +32,7 @@ $ mkfs.ext4 /dev/sda1
 $ mkswap /dev/sda2
 
 $ mount /dev/sda1 /mnt
+$ swapon /dev/sda2
 ```
 
 ### *Install the system*
@@ -40,13 +44,13 @@ $ pacstrap -i /mnt base linux linux-firmware sudo vim mc w3m byobu netctl git py
 ### *Generate fstab file*
 
 ```shell
-$ genfstab -U -p /mnt >> /mnt/etc/fstab
+$ genfstab -U /mnt >> /mnt/etc/fstab
 ```
 
 ### *Chroot to the installed system*
 
 ```shell
-$ arch-chroot /mnt /bin/bash
+$ arch-chroot /mnt
 ```
 
 ### *Set locale*
@@ -77,7 +81,7 @@ $ echo x61s > /etc/hostname
 $ vim /etc/hosts
 ```
 then add
-127.0.1.1 localhost.localdomain x61s
+127.0.1.1 x61s.localdomain x61s
 
 ### *Enable network*
 
@@ -93,10 +97,6 @@ $ passwd
 ```
 
 ### *Set SWAP*
-
-```shell
-$ swapon /dev/sda2
-```
 
 To enable this swap partition on boot, add an entry to /etc/fstab:
 UUID=device_UUID none swap defaults 0 0
