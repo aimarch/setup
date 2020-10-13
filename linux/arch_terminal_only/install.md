@@ -10,8 +10,9 @@ use iwd to access to wifi with WEP2 encription
 https://wiki.archlinux.org/index.php/Iwd
 
 ```shell
+$ ip link
 $ iwctl
-$ [iwd]# station device connect SSID`
+$ [iwd]# station *device* connect *SSID*
 ```
 
 ### *Partition*
