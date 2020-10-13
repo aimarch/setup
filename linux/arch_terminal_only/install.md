@@ -12,7 +12,7 @@ https://wiki.archlinux.org/index.php/Iwd
 ```shell
 $ ip link
 $ iwctl
-$ [iwd]# station *device* connect *SSID*
+$ [iwd]# station <device> connect <SSID>
 ```
 
 ### *Partition*
@@ -24,7 +24,7 @@ $ fdisk /dev/sda #create a dos partition table and write it
 $ cfdisk /dev/sda
 ```
 
-make one partition for the system, make it bootable and then RAM/2 for swap (only suspend without hibernation)
+make one partition for the system, make it bootable and then RAM*2 for swap (only suspend without hibernation)
 
 then format them
 
@@ -39,7 +39,7 @@ $ swapon /dev/sda2
 ### *Install the system*
 
 ```shell
-$ pacstrap -i /mnt base linux linux-firmware sudo vim mc w3m byobu netctl git python3 powertop zsh
+$ pacstrap -i /mnt base linux linux-firmware sudo vim mc w3m byobu git python3 powertop zsh netctl dialog
 ```
 
 ### *Generate fstab file*
@@ -57,7 +57,7 @@ $ arch-chroot /mnt
 ### *Set locale*
 
 ```shell
-$ vim /etc/locale.gen #You should jump to the line #en_US.UTF-8 UTF-8. Uncomment it by removing the # sign and save
+$ vim /etc/locale.gen #You should jump to the line `#en_US.UTF-8 UTF-8`. Uncomment it by removing the # sign and save
 $ locale-gen
 ```
 
@@ -82,13 +82,12 @@ $ echo x61s > /etc/hostname
 $ vim /etc/hosts
 ```
 then add
-127.0.1.1 x61s.localdomain x61s
+`127.0.1.1 x61s.localdomain x61s`
 
 ### *Enable network*
 
 ```shell
-$ pacman -S networkmanager
-$ systemctl enable NetworkManager
+-----------add
 ```
 
 ### *Set root password*
@@ -111,4 +110,27 @@ $ grub-mkconfig -o /boot/grub/grub.cfg
 $ exit
 $ umount -R /mnt
 $ reboot
+```
+
+### *Add user*
+
+```shell
+useradd -m -g users -G wheel -s /usr/bin/zsh <username>
+passwd <username>
+EDITOR=vim visudo
+```
+and uncomment `# %wheel ALL=(ALL) ALL`
+
+```shell
+exit
+```
+
+### Setup zsh
+
+```shell
+```
+
+### *Add audio*
+```shell
+pacman -S pulseaudio pulseaudio-alsa
 ```
