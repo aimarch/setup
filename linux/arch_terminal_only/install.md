@@ -97,16 +97,6 @@ $ systemctl enable NetworkManager
 $ passwd
 ```
 
-### *Set SWAP*
-
-To enable this swap partition on boot, add an entry to /etc/fstab:
-UUID=device_UUID none swap defaults 0 0
-
-to find UUID run
-```shell
-$ blkid | grep UUID=
-```
-
 ### *Install GRUB*
 
 ```shell
