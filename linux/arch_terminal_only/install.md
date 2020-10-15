@@ -1,9 +1,9 @@
 ## *Arch Linux installation - legacy mode*
 
-used
-https://wiki.archlinux.org/index.php/Installation_guide
-https://averagelinuxuser.com/a-step-by-step-arch-linux-installation-guide/
-https://gist.github.com/CodingCellist/05556e0cb6cde146fc3f70b578b73da3
+used:
+1. https://wiki.archlinux.org/index.php/Installation_guide
+2. https://averagelinuxuser.com/a-step-by-step-arch-linux-installation-guide/
+3. https://gist.github.com/CodingCellist/05556e0cb6cde146fc3f70b578b73da3
 
 ### *Setup wifi*
 
@@ -40,7 +40,7 @@ $ swapon /dev/sda2
 ### *Install the system*
 
 ```shell
-$ pacstrap -i /mnt base sudo vim mc w3m git python3 powertop java zsh netctl dialog tmux htop dhcpcd
+$ pacstrap -i /mnt base sudo vim mc w3m git python3 powertop java zsh netctl dialog tmux htop dhcpcd physlock
 ```
 
 ### *Generate fstab file*
@@ -143,12 +143,14 @@ $ pacman -Syu
 ### Setup tmux
 
 https://unix.stackexchange.com/questions/43601/how-can-i-set-my-default-shell-to-start-up-tmux
-
+https://www.nordtheme.com/docs/ports/tmux/installation
 ```shell
 
 ```
 
 ### Setup vim
+
+### Setup physlock
 
 ### *Add audio* - check
 ```shell
