@@ -4,6 +4,7 @@ used:
 1. https://wiki.archlinux.org/index.php/Installation_guide
 2. https://averagelinuxuser.com/a-step-by-step-arch-linux-installation-guide/
 3. https://gist.github.com/CodingCellist/05556e0cb6cde146fc3f70b578b73da3
+4. https://www.linuxjournal.com/content/without-gui-how-live-entirely-terminal
 
 ### *Setup wifi*
 
