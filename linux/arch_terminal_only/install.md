@@ -3,6 +3,7 @@
 used
 https://wiki.archlinux.org/index.php/Installation_guide
 https://averagelinuxuser.com/a-step-by-step-arch-linux-installation-guide/
+https://gist.github.com/CodingCellist/05556e0cb6cde146fc3f70b578b73da3
 
 ### *Setup wifi*
 
@@ -39,7 +40,7 @@ $ swapon /dev/sda2
 ### *Install the system*
 
 ```shell
-$ pacstrap -i /mnt base linux linux-firmware sudo vim mc w3m byobu git python3 powertop zsh netctl dialog
+$ pacstrap -i /mnt base linux linux-firmware sudo vim mc w3m git python3 powertop zsh netctl dialog tmux htop dhcpcd
 ```
 
 ### *Generate fstab file*
@@ -84,12 +85,6 @@ $ vim /etc/hosts
 then add
 `127.0.1.1 x61s.localdomain x61s`
 
-### *Enable network*
-
-```shell
------------add
-```
-
 ### *Set root password*
 
 ```shell
@@ -115,14 +110,22 @@ $ reboot
 ### *Add user*
 
 ```shell
-useradd -m -g users -G wheel -s /usr/bin/zsh <username>
-passwd <username>
-EDITOR=vim visudo
+$ useradd -m -g users -G wheel -s /usr/bin/zsh <username>
+$ passwd <username>
+$ EDITOR=vim visudo
 ```
 and uncomment `# %wheel ALL=(ALL) ALL`
 
 ```shell
-exit
+$ exit
+```
+
+### *Enable network*
+
+```shell
+$ systemctl start dhcpcd.service
+$ wifi-menu
+$ netctl start <saved network profile from wifi-menu>
 ```
 
 ### Setup zsh
@@ -130,7 +133,17 @@ exit
 ```shell
 ```
 
-### *Add audio*
+### Setup tmux
+
+https://unix.stackexchange.com/questions/43601/how-can-i-set-my-default-shell-to-start-up-tmux
+
+```shell
+
+```
+
+### Setup vim
+
+### *Add audio* - check
 ```shell
 pacman -S pulseaudio pulseaudio-alsa
 ```
