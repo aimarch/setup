@@ -40,7 +40,7 @@ $ swapon /dev/sda2
 ### *Install the system*
 
 ```shell
-$ pacstrap -i /mnt base linux linux-firmware sudo vim mc w3m git python3 powertop zsh netctl dialog tmux htop dhcpcd
+$ pacstrap -i /mnt base sudo vim mc w3m git python3 powertop java zsh netctl dialog tmux htop dhcpcd
 ```
 
 ### *Generate fstab file*
@@ -124,8 +124,15 @@ $ exit
 
 ```shell
 $ systemctl start dhcpcd.service
+$ systemctl enable dhcpcd.service
 $ wifi-menu
 $ netctl start <saved network profile from wifi-menu>
+```
+
+### Update system
+
+```shell
+$ pacman -Syu
 ```
 
 ### Setup zsh
