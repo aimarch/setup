@@ -40,7 +40,7 @@ $ mount /dev/sda1 /mnt
 ### *Install the system*
 
 ```shell
-$ pacstrap -i /mnt base sudo vim mc w3m git python3 powertop java zsh netctl dialog tmux htop dhcpcd physlock
+$ pacstrap -i /mnt base sudo vim mc w3m git python3 powertop jdk-openjdk zsh netctl dialog tmux htop dhcpcd physlock
 ```
 
 ### *Generate fstab file*
