@@ -5,6 +5,7 @@ used:
 2. https://averagelinuxuser.com/a-step-by-step-arch-linux-installation-guide/
 3. https://gist.github.com/CodingCellist/05556e0cb6cde146fc3f70b578b73da3
 4. https://www.linuxjournal.com/content/without-gui-how-live-entirely-terminal
+5. https://joshtronic.com/2018/10/12/hibernate-laptop-on-lid-close-with-systemd-boot-on-arch-linux/
 
 ### *Setup wifi*
 
@@ -26,16 +27,14 @@ $ fdisk /dev/sda #create a dos partition table and write it
 $ cfdisk /dev/sda
 ```
 
-make one partition for the system, make it bootable and then RAM*2 for swap (only suspend without hibernation)
+make one partition for the system, make it bootable swap partition is not need, we will create and setup swap file later
 
 then format them
 
 ```shell
 $ mkfs.ext4 /dev/sda1
-$ mkswap /dev/sda2
 
 $ mount /dev/sda1 /mnt
-$ swapon /dev/sda2
 ```
 
 ### *Install the system*
@@ -108,6 +107,32 @@ $ umount -R /mnt
 $ reboot
 ```
 
+### *Setup swap*
+
+create and enable
+```shell
+$ fallocate -l 8G /swapfile
+$ chmod 600 /swapfile
+$ mkswap /swapfile
+$ swapon /swapfile
+$ echo '/swapfile none swap defaults 0 0' >> /etc/fstab
+$ free -m # check
+```
+hibernation on disk
+```shell
+$ sudo filefrag -v /swapfile | sed -n '4p' | awk '{print $4+0}'
+    548832 <-- Copy this number
+$ sudo vim /etc/default/grub
+    GRUB_CMDLINE_LINUX_DEFAULT="quiet resume=/dev/your_root_disk resume_offset=the_number_just_copied"
+$ sudo grub-mkconfig -o /etc/grub/grub.cfg
+$ sudo vim /etc/mkinitcpio.conf
+    HOOKS="base udev resume autodetect modconf block filesystems keyboard fsck"
+$ sudo mkinitcpio -p linux # or linux-lts if you're using the LTS kernel
+$ sudo vim /etc/systemd/logind.conf
+    HandleLidSwitch=hibernate  # if you want to hibernate when the laptop lid closes
+$ sudo reboot
+```
+
 ### *Add user*
 
 ```shell
@@ -130,28 +155,30 @@ $ wifi-menu
 $ netctl start <saved network profile from wifi-menu>
 ```
 
-### Update system
+### *Update system*
 
 ```shell
 $ pacman -Syu
 ```
 
-### Setup zsh
-
+### *Setup zsh*
+add nord theme
 ```shell
 ```
 
-### Setup tmux
-
+### *Setup tmux*
 https://unix.stackexchange.com/questions/43601/how-can-i-set-my-default-shell-to-start-up-tmux
 https://www.nordtheme.com/docs/ports/tmux/installation
+
+add nord theme and run on start
 ```shell
 
 ```
 
-### Setup vim
+### *Setup vim*
+add nord theme
 
-### Setup physlock
+### *Setup physlock*
 
 ### *Add audio* - check
 ```shell
