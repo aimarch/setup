@@ -40,7 +40,7 @@ $ mount /dev/sda1 /mnt
 ### *Install the system*
 
 ```shell
-$ pacstrap -i /mnt base sudo vim mc w3m git python3 powertop jdk-openjdk zsh netctl dialog tmux htop dhcpcd physlock
+$ pacstrap -i /mnt base linux linux-firmware sudo vim mc w3m git python3 powertop jdk-openjdk zsh netctl dialog tmux htop dhcpcd physlock
 ```
 
 ### *Generate fstab file*
@@ -83,6 +83,8 @@ $ echo x61s > /etc/hostname
 $ vim /etc/hosts
 ```
 then add
+`127.0.0.1        localhost`
+`::1              localhost`
 `127.0.1.1 x61s.localdomain x61s`
 
 ### *Set root password*
